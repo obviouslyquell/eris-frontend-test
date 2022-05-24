@@ -5,7 +5,7 @@ import Row from '../Components/Row';
 function History() {
   const [data, setData] = useState([]);
   const [details, setDetails] = useState([]);
-
+  console.log('render');
   const sortElem = (a, b) => {
     if (Date.parse(a.date) > Date.parse(b.date)) {
       return -1;
@@ -46,7 +46,7 @@ function History() {
     }
     fetchRes();
   }, [data]);
-
+  console.log('render');
   return (
     <>
       <Navigation />
@@ -58,9 +58,10 @@ function History() {
           <p>Date</p>
         </div>
         <div className="content">
-          {data.map((e, index) => (
-            <Row element={e} key={index} />
-          ))}
+          {data.map((e) => {
+            const deIndex = details.findIndex((item) => item.id === `${e.resource}/${e.id}`);
+            return <Row element={e} key={e.id} resources={details[deIndex]} />;
+          })}
         </div>
       </div>
     </>

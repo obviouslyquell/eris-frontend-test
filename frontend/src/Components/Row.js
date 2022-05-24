@@ -1,7 +1,21 @@
 import React from 'react';
 
-function Row({ element }) {
+function Row({ element, resources }) {
   const MyDate = new Date(element.date);
+  let value = '';
+  if (resources?.values) {
+    if (resources.values.length === 0) {
+      value = '';
+    }
+    if (resources.values.length > 0) {
+      if (typeof resources.values[0] === 'object') {
+        value = `${resources.values[0]?.value} ${resources.values[0]?.unit}`;
+      } else {
+        value = resources.values[0];
+      }
+    }
+  }
+  console.log(value);
   return (
     <div className="content-item">
       <div>
@@ -14,10 +28,12 @@ function Row({ element }) {
         </p>
       </div>
       <div>
-        <p>{`${element.resource}/${element.id}`}</p>
+        <p className="details">
+          {value === '' ? `${resources?.details}` : `${resources?.details}: ${value}`}
+        </p>
       </div>
       <div>
-        <p>Code</p>
+        <p>{resources?.code}</p>
       </div>
       <div>
         <p>
