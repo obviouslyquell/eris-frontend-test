@@ -1,0 +1,77 @@
+.App {
+  max-width: 970px;
+  margin: 0 auto;
+}
+
+.table {
+  display: grid;
+
+  .header {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr 1fr;
+    border-bottom: 1px solid lightgray;
+  }
+
+  .content-item {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr 1fr;
+    border-bottom: 1px solid lightgray;
+    .event {
+      display: inline-block;
+    }
+    .Appointment {
+      border: 1px solid #8497ca;
+      background-color: #bfc8fa;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .Observation {
+      border: 1px solid #6fbed1;
+      background-color: #9aefff;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .Condition {
+      border: 1px solid #bacb96;
+      background-color: #daecb4;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .AllergyIntolerance {
+      border: 1px solid #e09eb6;
+      background-color: #ffc0db;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .CarePlan {
+      border: 1px solid #c39dc5;
+      background-color: #eac4ec;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .Diagnosis {
+      border: 1px solid #e7cbc1;
+      background-color: #f7e0d8;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .MedicationStatement {
+      border: 1px solid #92cdb7;
+      background-color: #b9edda;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .Immunization {
+      border: 1px solid #cd9692;
+      background-color: #edc9b9;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+    .Procedure {
+      border: 1px solid #92cdc5;
+      background-color: #b9edea;
+      border-radius: 5px;
+      padding: 2px 5px;
+    }
+  }
+}
