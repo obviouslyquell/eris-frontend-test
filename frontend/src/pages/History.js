@@ -22,11 +22,12 @@ function History() {
         .then((response) => response.json())
         .then((data) => {
           setData(data.items.sort(sortElem));
-        }); //catch въебать
+        })
+        .catch((err) => console.error(err.message));
     }
-
     fetchData();
   }, []);
+
   useEffect(() => {
     async function fetchRes() {
       const ids = { ids: data.map((e) => `${e.resource}/${e.id}`) };
@@ -45,7 +46,7 @@ function History() {
     }
     fetchRes();
   }, [data]);
-  console.log(details);
+
   return (
     <>
       <Navigation />
@@ -60,37 +61,6 @@ function History() {
           {data.map((e, index) => (
             <Row element={e} key={index} />
           ))}
-          {/* {data.map((e, i) => {
-            const MyDate = new Date(e.date);
-            return (
-              <div className="content-item">
-                <div>
-                  <p className={`event ${e.name}`}>
-                    {e.name === 'MedicationStatement'
-                      ? 'Medication'
-                      : e.name === 'AllergyIntolerance'
-                      ? 'Allergy'
-                      : e.name}
-                  </p>
-                </div>
-                <div>
-                  <p>{`${e.resource}/${e.id}`}</p>
-                </div>
-                <div>
-                  <p>Code</p>
-                </div>
-                <div>
-                  <p>
-                    {MyDate.toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric',
-                    })}
-                  </p>
-                </div>
-              </div>
-            );
-          })} */}
         </div>
       </div>
     </>
