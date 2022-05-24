@@ -2,6 +2,7 @@ import React from 'react';
 
 function Row({ element, resources }) {
   const MyDate = new Date(element.date);
+
   let value = '';
   if (resources?.values) {
     if (resources.values.length === 0) {
@@ -29,7 +30,15 @@ function Row({ element, resources }) {
       </div>
       <div>
         <p className="details">
-          {value === '' ? `${resources?.details}` : `${resources?.details}: ${value}`}
+          {value === ''
+            ? `${
+                resources?.details &&
+                resources?.details.charAt(0).toUpperCase() + resources.details.slice(1)
+              }`
+            : `${
+                resources?.details &&
+                resources?.details.charAt(0).toUpperCase() + resources.details.slice(1)
+              }: ${value}`}
         </p>
       </div>
       <div>
