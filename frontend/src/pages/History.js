@@ -1,52 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { observer } from 'mobx-react-lite';
 import Navigation from '../Components/Navigation';
 import Row from '../Components/Row';
+import { store } from '../Store/store';
+import { toJS } from 'mobx';
 
-function History() {
-  const [data, setData] = useState([]);
-  const [details, setDetails] = useState([]);
+const History = observer(() => {
+  const { events, resources } = store;
   console.log('render');
-  const sortElem = (a, b) => {
-    if (Date.parse(a.date) > Date.parse(b.date)) {
-      return -1;
-    }
-    if (Date.parse(a.date) < Date.parse(b.date)) {
-      return 1;
-    }
-    return 0;
-  };
 
   useEffect(() => {
-    async function fetchData() {
-      await fetch('http://localhost:5010/events', { method: 'POST' })
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data.items.sort(sortElem));
-        })
-        .catch((err) => console.error(err.message));
+    async function fetchEv() {
+      await store.fetchEvents();
     }
-    fetchData();
+    fetchEv();
   }, []);
 
   useEffect(() => {
     async function fetchRes() {
-      const ids = { ids: data.map((e) => `${e.resource}/${e.id}`) };
-      await fetch('http://localhost:5010/resources', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify(ids),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          setDetails(data.items);
-        })
-        .catch((err) => console.error(err.message));
+      await store.fetchResources();
     }
     fetchRes();
-  }, [data]);
-  console.log('render');
+  }, [events]);
+
   return (
     <>
       <Navigation />
@@ -58,14 +34,18 @@ function History() {
           <p>Date</p>
         </div>
         <div className="content">
-          {data.map((e) => {
-            const deIndex = details.findIndex((item) => item.id === `${e.resource}/${e.id}`);
-            return <Row element={e} key={e.id} resources={details[deIndex]} />;
-          })}
+          {events &&
+            resources &&
+            toJS(events).map((e) => {
+              const deIndex = toJS(resources).findIndex(
+                (item) => item.id === `${e.resource}/${e.id}`,
+              );
+              return <Row element={e} key={e.id} resources={resources[deIndex]} />;
+            })}
         </div>
       </div>
     </>
   );
-}
+});
 
 export default History;

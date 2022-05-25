@@ -16,7 +16,7 @@ function Row({ element, resources }) {
       }
     }
   }
-  console.log(value);
+
   return (
     <div className="content-item">
       <div>
