@@ -1,15 +1,17 @@
 import { makeAutoObservable, runInAction } from 'mobx';
+import { groupElems, groupBy } from '../lib/groupElems';
 import { sortElem } from '../lib/sortElem';
 export const store = makeAutoObservable({
   events: null,
   resources: null,
-
+  pseudo: {},
   fetchEvents: () => {
     fetch('http://localhost:5010/events', { method: 'POST' })
       .then((response) => response.json())
       .then((data) =>
         runInAction(() => {
-          store.events = data.items.sort(sortElem);
+          store.events = groupElems(data.items.sort(sortElem));
+          store.pseudo = groupBy(data.items.sort(sortElem), 'appointmentId');
         }),
       )
       .catch((err) => console.error(err.message));
